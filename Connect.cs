@@ -11,33 +11,44 @@ namespace ATVD_Login_Hash.Controller
     internal class Connection
     {
         private SqlConnection con;
-        private string DataBase = "GSD_CJ3022358";
-        private string Server = "sqlexpress";
+
+        private string DataBase = "Logins_Kevin";
+        private string Server = "sqlexpress"; // certifique-se de que está certo!
         private string Username = "aluno";
         private string Password = "aluno";
+
         public Connection()
         {
             string stringConnection =
-            @"Data Source = " + Server 
-            + "; Initial Catalog = " + DataBase
-            + "; User Id =" +  Username 
-            + "; Password =" + Password 
-            + "; Encrypt = false"; 
+                "Data Source=" + Server +
+                ";Initial Catalog=" + DataBase +
+                ";User ID=" + Username +
+                ";Password=" + Password +
+                ";Encrypt=false;TrustServerCertificate=true";
+
+            // Inicializa com a connection string correta
             con = new SqlConnection(stringConnection);
-            con.Open();   //Abrir a conexão com o banco de dados
+        }
+        public void OpenConnection()
+        {
+            if (con.State == ConnectionState.Closed)
+            {
+                con.Open();
+            }
         }
 
-        //Tenta fechar a conexão com o banco
         public void CloseConnection()
         {
             if (con.State == ConnectionState.Open)
+            {
                 con.Close();
-        }
-        //Retorna a conexão que foi aberta
-        public SqlConnection ReturnConnection()
-        {
-            return con;
+            }
         }
 
+        public SqlConnection ReturnConnection()
+        {
+            OpenConnection();
+            return con;
+        }
     }
 }
