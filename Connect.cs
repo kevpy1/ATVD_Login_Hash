@@ -27,7 +27,6 @@ namespace ATVD_Login_Hash.Controller
             con.Open();   //Abrir a conexão com o banco de dados
         }
 
-        //Tenta fechar a conexão com o banco
         public void CloseConnection()
         {
             if (con.State == ConnectionState.Open)
